@@ -303,10 +303,10 @@ f.each do |line|
 end
 f.close
 
-produces:
-The line is: This is line one
-The line is: This is line two
-The line is: This is line three
+#produces:
+#The line is: This is line one
+#The line is: This is line two
+#The line is: This is line three
 ```
 
 ## Parameter 和 Argument
