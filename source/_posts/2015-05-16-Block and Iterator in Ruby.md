@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Ruby 中的 Block 和 Iterator"
-date: 2015-06-17 00:13:41 +0800
+date: 2015-05-16 00:13:41 +0800
 comments: true
 categories: Ruby
 ---

@@ -132,8 +132,8 @@ p, li {
   .cs     { color: $base01 !important; font-weight: bold !important; font-style: italic !important; }   /* Comment.Special */
   .err    { color: $solar-red !important; background: none !important; }                                            /* Error */
   .k      { color: $solar-orange !important; }                       /* Keyword */
-  .o      { color: #F0FFB2 !important; font-weight: bold !important; }                       /* Operator */
-  .p      { color: #FF96AD !important; }                                             /* Operator */
+  .o      { color: $base1 !important; font-weight: bold !important; }                       /* Operator */
+  .p      { color: $base1 !important; }                                             /* Operator */
   .ow     { color: $solar-cyan !important; font-weight: bold !important; }                       /* Operator.Word */
   .gd     { color: $base1 !important; background-color: mix($solar-red, $base03, 25%) !important; display: inline-block; }               /* Generic.Deleted */
   .gd .x  { color: $base1 !important; background-color: mix($solar-red, $base03, 35%) !important; display: inline-block; }               /* Generic.Deleted.Specific */
