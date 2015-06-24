@@ -122,7 +122,7 @@ p, li {
   line-height: 1.45em;
   background: $base03 !important;
   color: $base1 !important;
-  span { color: #FFD3DE !important; }
+  span { color: $base1 !important; }
   span { font-style: normal !important; font-weight: normal !important; }
 
   .c      { color: $base01 !important; font-style: italic !important; }                     /* Comment */
