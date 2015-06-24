@@ -27,6 +27,12 @@ $ curl get.pow.cx | sh
 添加 Site, 指定 App 的目录所在位置即可
 
 <img src="{{ root_url }}/images/Anvil-1.png" />
+<br>
 <img src="{{ root_url }}/images/Anvil-2.png" />
 
 最后，就可以使用带 .dev 后缀的域名访问 App 了。
+
+## 参考
+
+1. Pow: http://pow.cx/
+2. Anvil: http://anvilformac.com/
