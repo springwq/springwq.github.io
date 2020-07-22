@@ -7,13 +7,13 @@ title: Steven Wu
 subtitle: ''
 description: ''
 keywords:
-author: Steven WU
+author: Steven Wu
 language: en
 timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://stevenwu.net
+url: https://stevenwu.net
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
