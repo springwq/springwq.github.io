@@ -16,28 +16,33 @@
     var CONFIG = {"hostname":"stevenwu.net","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Steven Wu">
-<meta property="og:url" content="https://stevenwu.net/index.html">
+  <meta name="description" content="Pry is a powerful alternative to the standard IRB shell for Ruby. Pry has 3 features are my favorite Edit code via line number in text editorIf we write or paste code in multiple lines, it will be dif">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My Favorite Pry Features">
+<meta property="og:url" content="https://stevenwu.net/2020/07/28/my-favorite-pry-featurs/index.html">
 <meta property="og:site_name" content="Steven Wu">
+<meta property="og:description" content="Pry is a powerful alternative to the standard IRB shell for Ruby. Pry has 3 features are my favorite Edit code via line number in text editorIf we write or paste code in multiple lines, it will be dif">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-28T17:43:01.000Z">
+<meta property="article:modified_time" content="2020-07-28T14:01:50.729Z">
 <meta property="article:author" content="Steven Wu">
+<meta property="article:tag" content="Pry">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://stevenwu.net/">
+<link rel="canonical" href="https://stevenwu.net/2020/07/28/my-favorite-pry-featurs/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Steven Wu</title>
+  <title>My Favorite Pry Features | Steven Wu</title>
   
 
 
@@ -150,7 +155,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -162,6 +167,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Edit-code-via-line-number-in-text-editor"><span class="nav-number">1.</span> <span class="nav-text">Edit code via line number in text editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View-documentation-or-source-code-directly"><span class="nav-number">2.</span> <span class="nav-text">View documentation or source code directly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-ls-command"><span class="nav-number">3.</span> <span class="nav-text">The ls command</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -229,9 +235,10 @@
       <div class="main-inner">
         
 
-        <div class="content index posts-expand">
+        <div class="content post posts-expand">
           
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -247,10 +254,9 @@
       <meta itemprop="name" content="Steven Wu">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/28/my-favorite-pry-featurs/" class="post-title-link" itemprop="url">My Favorite Pry Features</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          My Favorite Pry Features
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -274,7 +280,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a href="http://pry.github.io/" target="_blank" rel="noopener">Pry</a> is a powerful alternative to the standard IRB shell for Ruby.</p>
+        <p><a href="http://pry.github.io/" target="_blank" rel="noopener">Pry</a> is a powerful alternative to the standard IRB shell for Ruby.</p>
 <p>Pry has 3 features are my favorite</p>
 <h2 id="Edit-code-via-line-number-in-text-editor"><a href="#Edit-code-via-line-number-in-text-editor" class="headerlink" title="Edit code via line number in text editor"></a>Edit code via line number in text editor</h2><p>If we write or paste code in multiple lines, it will be difficult to fix typos in the middle. The<br><code>edit</code> command of Pry will allow us edit via line number from default text editor.</p>
 <p>A method with multiple lines, but the line number will keep the same.</p>
@@ -290,100 +296,62 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[9] pry(main)&gt; ls String</span><br><span class="line">Object.methods: yaml_tag</span><br><span class="line">String.methods: try_convert</span><br><span class="line">String#methods:</span><br><span class="line">  %            chr                    freeze             reverse      sum</span><br><span class="line">  *            clear                  getbyte            reverse!     swapcase</span><br><span class="line">  +            codepoints             grapheme_clusters  rindex       swapcase!</span><br><span class="line">  +@           concat                 gsub               rjust        to_c</span><br><span class="line">  -@           count                  gsub!              rpartition   to_f</span><br><span class="line">  &lt;&lt;           crypt                  hash               rstrip       to_i</span><br><span class="line">  &lt;&#x3D;&gt;          delete                 hex                rstrip!      to_r</span><br><span class="line">  &#x3D;&#x3D;           delete!                include?           scan         to_s</span><br><span class="line">  &#x3D;&#x3D;&#x3D;          delete_prefix          index              scrub        to_str</span><br><span class="line">  &#x3D;~           delete_prefix!         insert             scrub!       to_sym</span><br><span class="line">  []           delete_suffix          inspect            setbyte      tr</span><br><span class="line">  []&#x3D;          delete_suffix!         intern             shell_split  tr!</span><br><span class="line">  ascii_only?  downcase               length             shellescape  tr_s</span><br><span class="line">  b            downcase!              lines              shellsplit   tr_s!</span><br><span class="line">  bytes        dump                   ljust              size         undump</span><br><span class="line">  bytesize     each_byte              lstrip             slice        unicode_normalize</span><br><span class="line">  byteslice    each_char              lstrip!            slice!       unicode_normalize!</span><br><span class="line">  capitalize   each_codepoint         match              split        unicode_normalized?</span><br><span class="line">  capitalize!  each_grapheme_cluster  match?             squeeze      unpack</span><br><span class="line">  casecmp      each_line              next               squeeze!     unpack1</span><br><span class="line">  casecmp?     empty?                 next!              start_with?  upcase</span><br><span class="line">  center       encode                 oct                strip        upcase!</span><br><span class="line">  chars        encode!                ord                strip!       upto</span><br><span class="line">  chomp        encoding               partition          sub          valid_encoding?</span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+        
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/07/28/hello-world/">
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Steven Wu">
-      <meta itemprop="description" content="">
-    </span>
+    <div class="social-list">
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Steven Wu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-28 14:01:50" itemprop="dateCreated datePublished" datetime="2020-07-28T14:01:50+00:00">2020-07-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HEXO-NexT/" itemprop="url" rel="index"><span itemprop="name">HEXO-NexT</span></a>
-                </span>
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/springwq">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
             </span>
 
-          
-
+            <span class="label">Twitter</span>
+          </a>
         </div>
-      </header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
 
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
+            <span class="label">RSS</span>
+          </a>
+        </div>
     </div>
+  </div>
 
-    
-    
-    
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/Pry/" rel="tag"># Pry</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/28/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
