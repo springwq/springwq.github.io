@@ -175,7 +175,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -235,7 +235,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/07/28/my-favorite-pry-featurs/">
+    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/10/07/test-posts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -249,7 +249,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/28/my-favorite-pry-featurs/" class="post-title-link" itemprop="url">My Favorite Pry Features</a>
+            <a href="/2020/10/07/test-posts/" class="post-title-link" itemprop="url">test-posts</a>
         </h2>
 
         <div class="post-meta">
@@ -260,7 +260,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-07-28 17:43:01 / Modified: 14:01:50" itemprop="dateCreated datePublished" datetime="2020-07-28T17:43:01+00:00">2020-07-28</time>
+              <time title="Created: 2020-10-07 17:31:04 / Modified: 09:32:45" itemprop="dateCreated datePublished" datetime="2020-10-07T17:31:04+00:00">2020-10-07</time>
             </span>
 
           
@@ -274,22 +274,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><a href="http://pry.github.io/" target="_blank" rel="noopener">Pry</a> is a powerful alternative to the standard IRB shell for Ruby.</p>
-<p>Pry has 3 features are my favorite</p>
-<h2 id="Edit-code-via-line-number-in-text-editor"><a href="#Edit-code-via-line-number-in-text-editor" class="headerlink" title="Edit code via line number in text editor"></a>Edit code via line number in text editor</h2><p>If we write or paste code in multiple lines, it will be difficult to fix typos in the middle. The<br><code>edit</code> command of Pry will allow us edit via line number from default text editor.</p>
-<p>A method with multiple lines, but the line number will keep the same.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[1] pry(main)&gt; def test_method</span><br><span class="line">[1] pry(main)*   puts &quot;Hello, Worrrld!&quot;</span><br><span class="line">[1] pry(main)* end</span><br><span class="line">&#x3D;&gt; :test_method</span><br><span class="line">[2] pry(main)&gt; edit -i 1</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_method</span></span></span><br><span class="line">  puts <span class="string">"Hello, Worrrld!"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="View-documentation-or-source-code-directly"><a href="#View-documentation-or-source-code-directly" class="headerlink" title="View documentation or source code directly"></a>View documentation or source code directly</h2><p>The <code>show-source</code> command is very handy to check the source code of class or method, especially with<br><code>-d</code> option, it will show detail documentation as well.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">7] pry(main)&gt; show-source -d puts</span><br><span class="line"></span><br><span class="line">From: io.c (C Method):</span><br><span class="line">Owner: Kernel</span><br><span class="line">Visibility: private</span><br><span class="line">Signature: puts(*arg1)</span><br><span class="line">Number of lines: 12</span><br><span class="line"></span><br><span class="line">Equivalent to</span><br><span class="line"></span><br><span class="line">    $stdout.puts(obj, ...)</span><br><span class="line"></span><br><span class="line">static VALUE</span><br><span class="line">rb_f_puts(int argc, VALUE *argv, VALUE recv)</span><br><span class="line">&#123;</span><br><span class="line">    if (recv &#x3D;&#x3D; rb_stdout) &#123;</span><br><span class="line">	return rb_io_puts(argc, argv, recv);</span><br><span class="line">    &#125;</span><br><span class="line">    return rb_funcallv(rb_stdout, rb_intern(&quot;puts&quot;), argc, argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-ls-command"><a href="#The-ls-command" class="headerlink" title="The ls command"></a>The ls command</h2><p>If we missed some methods, constants or variables of one class, the <code>ls</code> will help.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[9] pry(main)&gt; ls String</span><br><span class="line">Object.methods: yaml_tag</span><br><span class="line">String.methods: try_convert</span><br><span class="line">String#methods:</span><br><span class="line">  %            chr                    freeze             reverse      sum</span><br><span class="line">  *            clear                  getbyte            reverse!     swapcase</span><br><span class="line">  +            codepoints             grapheme_clusters  rindex       swapcase!</span><br><span class="line">  +@           concat                 gsub               rjust        to_c</span><br><span class="line">  -@           count                  gsub!              rpartition   to_f</span><br><span class="line">  &lt;&lt;           crypt                  hash               rstrip       to_i</span><br><span class="line">  &lt;&#x3D;&gt;          delete                 hex                rstrip!      to_r</span><br><span class="line">  &#x3D;&#x3D;           delete!                include?           scan         to_s</span><br><span class="line">  &#x3D;&#x3D;&#x3D;          delete_prefix          index              scrub        to_str</span><br><span class="line">  &#x3D;~           delete_prefix!         insert             scrub!       to_sym</span><br><span class="line">  []           delete_suffix          inspect            setbyte      tr</span><br><span class="line">  []&#x3D;          delete_suffix!         intern             shell_split  tr!</span><br><span class="line">  ascii_only?  downcase               length             shellescape  tr_s</span><br><span class="line">  b            downcase!              lines              shellsplit   tr_s!</span><br><span class="line">  bytes        dump                   ljust              size         undump</span><br><span class="line">  bytesize     each_byte              lstrip             slice        unicode_normalize</span><br><span class="line">  byteslice    each_char              lstrip!            slice!       unicode_normalize!</span><br><span class="line">  capitalize   each_codepoint         match              split        unicode_normalized?</span><br><span class="line">  capitalize!  each_grapheme_cluster  match?             squeeze      unpack</span><br><span class="line">  casecmp      each_line              next               squeeze!     unpack1</span><br><span class="line">  casecmp?     empty?                 next!              start_with?  upcase</span><br><span class="line">  center       encode                 oct                strip        upcase!</span><br><span class="line">  chars        encode!                ord                strip!       upto</span><br><span class="line">  chomp        encoding               partition          sub          valid_encoding?</span><br></pre></td></tr></table></figure>
-
-
+          <h2 id="测试文章"><a href="#测试文章" class="headerlink" title="测试文章"></a>测试文章</h2>
       
     </div>
 
@@ -308,7 +293,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/07/28/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/10/07/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -322,7 +307,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/28/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2020/10/07/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
         </h2>
 
         <div class="post-meta">
@@ -332,7 +317,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-07-28 14:01:50" itemprop="dateCreated datePublished" datetime="2020-07-28T14:01:50+00:00">2020-07-28</time>
+              <time title="Created: 2020-10-07 09:32:45" itemprop="dateCreated datePublished" datetime="2020-10-07T09:32:45+00:00">2020-10-07</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -368,6 +353,85 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/07/28/my-favorite-pry-featurs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Steven Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Steven Wu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/28/my-favorite-pry-featurs/" class="post-title-link" itemprop="url">My Favorite Pry Features</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-28 17:43:01" itemprop="dateCreated datePublished" datetime="2020-07-28T17:43:01+00:00">2020-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-10-07 09:32:45" itemprop="dateModified" datetime="2020-10-07T09:32:45+00:00">2020-10-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a href="http://pry.github.io/" target="_blank" rel="noopener">Pry</a> is a powerful alternative to the standard IRB shell for Ruby.</p>
+<p>Pry has 3 features are my favorite</p>
+<h2 id="Edit-code-via-line-number-in-text-editor"><a href="#Edit-code-via-line-number-in-text-editor" class="headerlink" title="Edit code via line number in text editor"></a>Edit code via line number in text editor</h2><p>If we write or paste code in multiple lines, it will be difficult to fix typos in the middle. The<br><code>edit</code> command of Pry will allow us edit via line number from default text editor.</p>
+<p>A method with multiple lines, but the line number will keep the same.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[1] pry(main)&gt; def test_method</span><br><span class="line">[1] pry(main)*   puts &quot;Hello, Worrrld!&quot;</span><br><span class="line">[1] pry(main)* end</span><br><span class="line">&#x3D;&gt; :test_method</span><br><span class="line">[2] pry(main)&gt; edit -i 1</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_method</span></span></span><br><span class="line">  puts <span class="string">"Hello, Worrrld!"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="View-documentation-or-source-code-directly"><a href="#View-documentation-or-source-code-directly" class="headerlink" title="View documentation or source code directly"></a>View documentation or source code directly</h2><p>The <code>show-source</code> command is very handy to check the source code of class or method, especially with<br><code>-d</code> option, it will show detail documentation as well.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">7] pry(main)&gt; show-source -d puts</span><br><span class="line"></span><br><span class="line">From: io.c (C Method):</span><br><span class="line">Owner: Kernel</span><br><span class="line">Visibility: private</span><br><span class="line">Signature: puts(*arg1)</span><br><span class="line">Number of lines: 12</span><br><span class="line"></span><br><span class="line">Equivalent to</span><br><span class="line"></span><br><span class="line">    $stdout.puts(obj, ...)</span><br><span class="line"></span><br><span class="line">static VALUE</span><br><span class="line">rb_f_puts(int argc, VALUE *argv, VALUE recv)</span><br><span class="line">&#123;</span><br><span class="line">    if (recv &#x3D;&#x3D; rb_stdout) &#123;</span><br><span class="line">	return rb_io_puts(argc, argv, recv);</span><br><span class="line">    &#125;</span><br><span class="line">    return rb_funcallv(rb_stdout, rb_intern(&quot;puts&quot;), argc, argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="The-ls-command"><a href="#The-ls-command" class="headerlink" title="The ls command"></a>The ls command</h2><p>If we missed some methods, constants or variables of one class, the <code>ls</code> will help.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[9] pry(main)&gt; ls String</span><br><span class="line">Object.methods: yaml_tag</span><br><span class="line">String.methods: try_convert</span><br><span class="line">String#methods:</span><br><span class="line">  %            chr                    freeze             reverse      sum</span><br><span class="line">  *            clear                  getbyte            reverse!     swapcase</span><br><span class="line">  +            codepoints             grapheme_clusters  rindex       swapcase!</span><br><span class="line">  +@           concat                 gsub               rjust        to_c</span><br><span class="line">  -@           count                  gsub!              rpartition   to_f</span><br><span class="line">  &lt;&lt;           crypt                  hash               rstrip       to_i</span><br><span class="line">  &lt;&#x3D;&gt;          delete                 hex                rstrip!      to_r</span><br><span class="line">  &#x3D;&#x3D;           delete!                include?           scan         to_s</span><br><span class="line">  &#x3D;&#x3D;&#x3D;          delete_prefix          index              scrub        to_str</span><br><span class="line">  &#x3D;~           delete_prefix!         insert             scrub!       to_sym</span><br><span class="line">  []           delete_suffix          inspect            setbyte      tr</span><br><span class="line">  []&#x3D;          delete_suffix!         intern             shell_split  tr!</span><br><span class="line">  ascii_only?  downcase               length             shellescape  tr_s</span><br><span class="line">  b            downcase!              lines              shellsplit   tr_s!</span><br><span class="line">  bytes        dump                   ljust              size         undump</span><br><span class="line">  bytesize     each_byte              lstrip             slice        unicode_normalize</span><br><span class="line">  byteslice    each_char              lstrip!            slice!       unicode_normalize!</span><br><span class="line">  capitalize   each_codepoint         match              split        unicode_normalized?</span><br><span class="line">  capitalize!  each_grapheme_cluster  match?             squeeze      unpack</span><br><span class="line">  casecmp      each_line              next               squeeze!     unpack1</span><br><span class="line">  casecmp?     empty?                 next!              start_with?  upcase</span><br><span class="line">  center       encode                 oct                strip        upcase!</span><br><span class="line">  chars        encode!                ord                strip!       upto</span><br><span class="line">  chomp        encoding               partition          sub          valid_encoding?</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
