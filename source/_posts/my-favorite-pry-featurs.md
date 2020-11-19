@@ -8,6 +8,7 @@ tags: [Pry]
 
 Pry has 3 features are my favorite
 
+<!--more-->
 
 ## Edit code via line number in text editor
 
@@ -94,4 +95,3 @@ String#methods:
   chars        encode!                ord                strip!       upto
   chomp        encoding               partition          sub          valid_encoding?
 ```
-
