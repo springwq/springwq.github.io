@@ -1,22 +1,21 @@
 ---
-title: My Favorite Pry Features
+title: Pry 实用命令
 date: 2020-07-28 17:43:01
 tags: [Pry]
 ---
 
 [Pry](http://pry.github.io/) is a powerful alternative to the standard IRB shell for Ruby.
 
-Pry has 3 features are my favorite
+Pry 有三个实用的小功能
 
 <!--more-->
 
-## Edit code via line number in text editor
+## edit 命令
 
-If we write or paste code in multiple lines, it will be difficult to fix typos in the middle. The
-`edit` command of Pry will allow us edit via line number from default text editor.
+在 pry 中如果输入了多行的代码，然后想要再修改，可能比较头疼。这时可以通过 edit 命令，用 pry 默认的编辑器来编辑代码
 
+具体使用方法如下：
 
-A method with multiple lines, but the line number will keep the same.
 
 ```
 [1] pry(main)> def test_method
@@ -33,10 +32,9 @@ def test_method
 end
 ```
 
-## View documentation or source code directly
+## show-source 命令
 
-The `show-source` command is very handy to check the source code of class or method, especially with
-`-d` option, it will show detail documentation as well.
+ `show-source` 命令会查询访问或类的源代码，加上 `-d` 会显示详细的代码文档
 
 ```
 7] pry(main)> show-source -d puts
@@ -61,9 +59,10 @@ rb_f_puts(int argc, VALUE *argv, VALUE recv)
 }
 ```
 
-## The ls command
+## ls 命令
 
-If we missed some methods, constants or variables of one class, the `ls` will help.
+有时我们会忘记某一个类的方法， `ls` 能查看某一个类的方法，常量和变量
+
 
 ```
 [9] pry(main)> ls String
