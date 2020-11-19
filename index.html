@@ -13,7 +13,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"stevenwu.net","root":"/","scheme":"Mist","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"stevenwu.net","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -196,6 +196,9 @@
         <a href="https://twitter.com/springwq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;springwq" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
       </span>
   </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -260,7 +263,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-19 06:35:55" itemprop="dateModified" datetime="2020-11-19T06:35:55+00:00">2020-11-19</time>
+                <time title="Modified: 2020-11-19 06:53:20" itemprop="dateModified" datetime="2020-11-19T06:53:20+00:00">2020-11-19</time>
               </span>
 
           
@@ -276,20 +279,14 @@
       
           <p><a href="http://pry.github.io/" target="_blank" rel="noopener">Pry</a> is a powerful alternative to the standard IRB shell for Ruby.</p>
 <p>Pry has 3 features are my favorite</p>
-<h2 id="Edit-code-via-line-number-in-text-editor"><a href="#Edit-code-via-line-number-in-text-editor" class="headerlink" title="Edit code via line number in text editor"></a>Edit code via line number in text editor</h2><p>If we write or paste code in multiple lines, it will be difficult to fix typos in the middle. The<br><code>edit</code> command of Pry will allow us edit via line number from default text editor.</p>
-<p>A method with multiple lines, but the line number will keep the same.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[1] pry(main)&gt; def test_method</span><br><span class="line">[1] pry(main)*   puts &quot;Hello, Worrrld!&quot;</span><br><span class="line">[1] pry(main)* end</span><br><span class="line">&#x3D;&gt; :test_method</span><br><span class="line">[2] pry(main)&gt; edit -i 1</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_method</span></span></span><br><span class="line">  puts <span class="string">"Hello, Worrrld!"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="View-documentation-or-source-code-directly"><a href="#View-documentation-or-source-code-directly" class="headerlink" title="View documentation or source code directly"></a>View documentation or source code directly</h2><p>The <code>show-source</code> command is very handy to check the source code of class or method, especially with<br><code>-d</code> option, it will show detail documentation as well.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">7] pry(main)&gt; show-source -d puts</span><br><span class="line"></span><br><span class="line">From: io.c (C Method):</span><br><span class="line">Owner: Kernel</span><br><span class="line">Visibility: private</span><br><span class="line">Signature: puts(*arg1)</span><br><span class="line">Number of lines: 12</span><br><span class="line"></span><br><span class="line">Equivalent to</span><br><span class="line"></span><br><span class="line">    $stdout.puts(obj, ...)</span><br><span class="line"></span><br><span class="line">static VALUE</span><br><span class="line">rb_f_puts(int argc, VALUE *argv, VALUE recv)</span><br><span class="line">&#123;</span><br><span class="line">    if (recv &#x3D;&#x3D; rb_stdout) &#123;</span><br><span class="line">	return rb_io_puts(argc, argv, recv);</span><br><span class="line">    &#125;</span><br><span class="line">    return rb_funcallv(rb_stdout, rb_intern(&quot;puts&quot;), argc, argv);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="The-ls-command"><a href="#The-ls-command" class="headerlink" title="The ls command"></a>The ls command</h2><p>If we missed some methods, constants or variables of one class, the <code>ls</code> will help.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[9] pry(main)&gt; ls String</span><br><span class="line">Object.methods: yaml_tag</span><br><span class="line">String.methods: try_convert</span><br><span class="line">String#methods:</span><br><span class="line">  %            chr                    freeze             reverse      sum</span><br><span class="line">  *            clear                  getbyte            reverse!     swapcase</span><br><span class="line">  +            codepoints             grapheme_clusters  rindex       swapcase!</span><br><span class="line">  +@           concat                 gsub               rjust        to_c</span><br><span class="line">  -@           count                  gsub!              rpartition   to_f</span><br><span class="line">  &lt;&lt;           crypt                  hash               rstrip       to_i</span><br><span class="line">  &lt;&#x3D;&gt;          delete                 hex                rstrip!      to_r</span><br><span class="line">  &#x3D;&#x3D;           delete!                include?           scan         to_s</span><br><span class="line">  &#x3D;&#x3D;&#x3D;          delete_prefix          index              scrub        to_str</span><br><span class="line">  &#x3D;~           delete_prefix!         insert             scrub!       to_sym</span><br><span class="line">  []           delete_suffix          inspect            setbyte      tr</span><br><span class="line">  []&#x3D;          delete_suffix!         intern             shell_split  tr!</span><br><span class="line">  ascii_only?  downcase               length             shellescape  tr_s</span><br><span class="line">  b            downcase!              lines              shellsplit   tr_s!</span><br><span class="line">  bytes        dump                   ljust              size         undump</span><br><span class="line">  bytesize     each_byte              lstrip             slice        unicode_normalize</span><br><span class="line">  byteslice    each_char              lstrip!            slice!       unicode_normalize!</span><br><span class="line">  capitalize   each_codepoint         match              split        unicode_normalized?</span><br><span class="line">  capitalize!  each_grapheme_cluster  match?             squeeze      unpack</span><br><span class="line">  casecmp      each_line              next               squeeze!     unpack1</span><br><span class="line">  casecmp?     empty?                 next!              start_with?  upcase</span><br><span class="line">  center       encode                 oct                strip        upcase!</span><br><span class="line">  chars        encode!                ord                strip!       upto</span><br><span class="line">  chomp        encoding               partition          sub          valid_encoding?</span><br></pre></td></tr></table></figure>
-
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/28/my-favorite-pry-featurs/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -352,7 +349,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Steven Wu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
         
@@ -376,9 +373,6 @@
 <script src="/js/utils.js"></script>
 
 <script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
 
 
 <script src="/js/next-boot.js"></script>
