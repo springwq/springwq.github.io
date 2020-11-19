@@ -17,3 +17,7 @@ $ hexo new '文章标题'
 ```shell
 $ git push origin hexo-source
 ```
+
+## 显示摘要
+
+在文章正文里省略的内容之上加上 `<!--more-->`
