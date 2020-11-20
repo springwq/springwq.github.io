@@ -4,7 +4,7 @@ date: 2020-11-19 15:19:52
 tags: [Ruby, MetaProgramming]
 ---
 
-Ruby 的对象模型 The Object Model, 是 Ruby 的灵魂, 《Ruby 元编程》第 2 章通过对以下三个问题的探索，详细介绍了 Ruby 对象模型的细节.
+Ruby 的对象模型, 是 Ruby 语言的灵魂， 以下内容主要讨论打开类，什么时候类，方法如何执行等问题。
 
 <!--more-->
 
