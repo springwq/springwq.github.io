@@ -1,7 +1,7 @@
 ---
 title: Ruby 元编程学习笔记 - 对象模型
 date: 2020-11-19 15:19:52
-tags: [Ruby, MetaProgramming]
+tags: [Ruby, Metaprogramming]
 ---
 
 Ruby 的对象模型, 是 Ruby 语言的灵魂， 以下内容主要讨论打开类，什么时候类，方法
