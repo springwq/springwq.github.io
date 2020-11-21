@@ -16,21 +16,21 @@
     var CONFIG = {"hostname":"stevenwu.net","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Ruby 是一门动态语言，本身有很多动态特性，能够用来解决代码繁复的问题。这些动态特性主要表现在几个动态方法上，以下做详细介绍。">
+  <meta name="description" content="代码块（block）可以用来控制作用域（scope）, 作用域是变量和方法的可用性范围。块只是“可调用对象”大家族中的一员，还有像 proc 和 lambda 这样的对象。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ruby 元编程学习笔记 - 方法">
-<meta property="og:url" content="https://stevenwu.net/2020/11/19/ruby-metaprogramming-methods/index.html">
+<meta property="og:title" content="Ruby 元编程学习笔记 - Blocks">
+<meta property="og:url" content="https://stevenwu.net/2020/11/20/ruby-metaprogramming-blocks/index.html">
 <meta property="og:site_name" content="Steven Wu">
-<meta property="og:description" content="Ruby 是一门动态语言，本身有很多动态特性，能够用来解决代码繁复的问题。这些动态特性主要表现在几个动态方法上，以下做详细介绍。">
+<meta property="og:description" content="代码块（block）可以用来控制作用域（scope）, 作用域是变量和方法的可用性范围。块只是“可调用对象”大家族中的一员，还有像 proc 和 lambda 这样的对象。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-11-19T23:57:02.000Z">
+<meta property="article:published_time" content="2020-11-20T16:15:07.000Z">
 <meta property="article:modified_time" content="2020-11-21T15:43:10.015Z">
 <meta property="article:author" content="Steven Wu">
 <meta property="article:tag" content="Ruby">
 <meta property="article:tag" content="Metaprogramming">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://stevenwu.net/2020/11/19/ruby-metaprogramming-methods/">
+<link rel="canonical" href="https://stevenwu.net/2020/11/20/ruby-metaprogramming-blocks/">
 
 
 <script id="page-configurations">
@@ -43,7 +43,7 @@
   };
 </script>
 
-  <title>Ruby 元编程学习笔记 - 方法 | Steven Wu</title>
+  <title>Ruby 元编程学习笔记 - Blocks | Steven Wu</title>
   
 
 
@@ -168,7 +168,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态方法"><span class="nav-number">1.</span> <span class="nav-text">动态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动态调用方法"><span class="nav-number">1.1.</span> <span class="nav-text">动态调用方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态定义方法"><span class="nav-number">1.2.</span> <span class="nav-text">动态定义方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method-missing-方法"><span class="nav-number">2.</span> <span class="nav-text">method_missing 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#幽灵方法-Ghost-Methods"><span class="nav-number">2.1.</span> <span class="nav-text">幽灵方法 Ghost Methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态代理-Dynamic-Proxies"><span class="nav-number">2.2.</span> <span class="nav-text">动态代理 Dynamic Proxies</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#白板类-Blank-Slates"><span class="nav-number">3.</span> <span class="nav-text">白板类 Blank Slates</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BasicObject"><span class="nav-number">3.1.</span> <span class="nav-text">BasicObject</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除方法"><span class="nav-number">3.2.</span> <span class="nav-text">删除方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blocks"><span class="nav-number">1.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closures"><span class="nav-number">2.</span> <span class="nav-text">Closures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域-Scope"><span class="nav-number">2.1.</span> <span class="nav-text">作用域 Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域门-Scope-Gate"><span class="nav-number">2.2.</span> <span class="nav-text">作用域门 Scope Gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化作用域-Flatting-the-Scope"><span class="nav-number">2.3.</span> <span class="nav-text">扁平化作用域  Flatting the Scope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instance-eval-方法"><span class="nav-number">3.</span> <span class="nav-text">instance_eval 方法</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -242,7 +242,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/11/19/ruby-metaprogramming-methods/">
+    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/11/20/ruby-metaprogramming-blocks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -255,7 +255,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Ruby 元编程学习笔记 - 方法
+          Ruby 元编程学习笔记 - Blocks
         </h1>
 
         <div class="post-meta">
@@ -265,7 +265,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-11-19 23:57:02" itemprop="dateCreated datePublished" datetime="2020-11-19T23:57:02+00:00">2020-11-19</time>
+              <time title="Created: 2020-11-20 16:15:07" itemprop="dateCreated datePublished" datetime="2020-11-20T16:15:07+00:00">2020-11-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -286,86 +286,101 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Ruby 是一门动态语言，本身有很多动态特性，能够用来解决代码繁复的问题。这些动态特性主要表现在几个动态方法上，以下做详细介绍。</p>
+        <p>代码块（block）可以用来控制作用域（scope）, 作用域是变量和方法的可用性范围。块只是“可调用对象”大家族中的一员，还有像 proc 和 lambda 这样的对象。</p>
 <a id="more"></a>
 
-<h2 id="动态方法"><a href="#动态方法" class="headerlink" title="动态方法"></a>动态方法</h2><h3 id="动态调用方法"><a href="#动态调用方法" class="headerlink" title="动态调用方法"></a>动态调用方法</h3><ul>
-<li>使用 Object#send 方法代码点标识符来调用方法</li>
+<h2 id="Blocks"><a href="#Blocks" class="headerlink" title="Blocks"></a>Blocks</h2><ul>
+<li>代码块可以用大括号定义，也可以用 do…end 关键字定义</li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj.send(<span class="symbol">:my_method</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_method</span><span class="params">(a, b)</span></span></span><br><span class="line">  a + <span class="keyword">yield</span>(a, b)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">a_method(<span class="number">1</span>, <span class="number">2</span>) &#123; <span class="params">|x, y|</span> (x + y) *<span class="number">3</span> &#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>send 方法的第一个参数就是方法的名字<ul>
-<li>这个参数可以是字符串，也可以用符号</li>
-<li>通常使用符号作为方法名</li>
+<li>只有在定义一个方法时，才可以定义一个块。块会被直接传递给这个方法，该方法可以用 yield 关键字调用这个块</li>
+<li>块可以有自己的参数。另外，块的最后一行代码执行的结果会被作为返回值</li>
+<li>在一个方法里，可以询问当前方法是否包含块。通过 Kernel#block_given?</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">a_method</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">'no block'</span> <span class="keyword">unless</span> block_given?</span><br><span class="line">  <span class="keyword">yield</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Closures"><a href="#Closures" class="headerlink" title="Closures"></a>Closures</h2><ul>
+<li>代码块之所以能运行，是因为它既包含代码，也包含一组绑定（binding）</li>
+<li>定义一个代码块时，它会获取环境中的绑定</li>
+<li>当块被传递给一个方法时，它会带着这些绑定一块进入该方法</li>
+<li>还可以在代码块内定义额外的绑定，但这些绑定在代码块结束时就消失了</li>
+<li>基以上特性，人们喜欢把代码块成为闭包（Closure）。代码块可以获取局部绑定，并一直带着他们</li>
+</ul>
+<h3 id="作用域-Scope"><a href="#作用域-Scope" class="headerlink" title="作用域 Scope"></a>作用域 Scope</h3><ul>
+<li>Kernal#local_variables 返回当前作用域内的本地变量，可以用来跟踪绑定的名字</li>
+<li>Ruby 的作用域之间是截然分开的，一旦进入一个新的作用域，原来的绑定会被替换为一组新的绑定</li>
+<li>绑定（尤其是局部变量）在切换作用域时很容易失效</li>
+</ul>
+<h3 id="作用域门-Scope-Gate"><a href="#作用域门-Scope-Gate" class="headerlink" title="作用域门 Scope Gate"></a>作用域门 Scope Gate</h3><ul>
+<li><p>程序会在三个地方关闭前一个作用域，同时打开一个新作用域</p>
+<ul>
+<li>类定义：class 关键字作为标志</li>
+<li>模块定义：module 关键字作为标志</li>
+<li>方法：def 关键字作为标志</li>
 </ul>
 </li>
-<li>使用 send 方法后， 想要调用的方法名变成了参数，这样就可以再代码运行的最后一刻决定调用哪个方法</li>
-<li>这个技巧，也被成为动态派发 Dynamic Dispatch</li>
-<li>可以通过 send 调用任何方法，包括私有方法</li>
-<li>如果不想破坏封装的行为，可以使用 public_send</li>
+<li><p>在类定义和模块定义中行的代码会立即执行</p>
+</li>
+<li><p>在方法中定义的代码不会立即执行</p>
+</li>
 </ul>
-<h3 id="动态定义方法"><a href="#动态定义方法" class="headerlink" title="动态定义方法"></a>动态定义方法</h3><ul>
-<li>可以使用 Module#define_method 方法随时定义一个方法<ul>
-<li>define_method 方法在 MyClass 内部执行</li>
-<li>因此 my_method 定义为 MyClass 的实例方法</li>
+<h3 id="扁平化作用域-Flatting-the-Scope"><a href="#扁平化作用域-Flatting-the-Scope" class="headerlink" title="扁平化作用域  Flatting the Scope"></a>扁平化作用域  Flatting the Scope</h3><ul>
+<li><p>如何让绑定穿越 class 作用域门</p>
+<ul>
+<li>将 class 关键字替换为某个非作用域门的东西，比如方法调用</li>
+<li>如果能用方法替换 class, 就能在一个闭包中获取 class 作用门之外的本地变量</li>
+<li>Class.new 就是这样的方法</li>
+</ul>
+</li>
+<li><p>如何让绑定穿越 def 作用域门</p>
+<ul>
+<li>可以使用 Module#define_method 来替代 def</li>
 </ul>
 </li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  define_method <span class="symbol">:my_method</span> <span class="keyword">do</span> <span class="params">|my_arg|</span></span><br><span class="line">    my_arg + <span class="number">3</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">my_var = <span class="string">'Success'</span></span><br><span class="line"></span><br><span class="line">MyClass = Class.new <span class="keyword">do</span></span><br><span class="line">  puts <span class="string">"<span class="subst">#&#123;my_var&#125;</span> in the class definition"</span></span><br><span class="line"></span><br><span class="line">  define_method <span class="symbol">:my_methdo</span> <span class="keyword">do</span></span><br><span class="line">    <span class="string">"<span class="subst">#&#123;my_var&#125;</span> in the method"</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><p>这种在运行时定义方法的技术成为动态方法 Dynamic Method</p>
-</li>
-<li><p>define_method 允许在运行时决定方法名</p>
-</li>
-</ul>
-<h2 id="method-missing-方法"><a href="#method-missing-方法" class="headerlink" title="method_missing 方法"></a>method_missing 方法</h2><ul>
-<li>在 Ruby 中，编译器并去检查方法调用的行为，因此可以调用一个并不存在的方法</li>
-<li>method_missing 是 BasicObkect 的一个私有实例方法</li>
-<li>如果调用的一个方法在哪里都找不到，最后会调用 method_missing</li>
-<li>覆写 method_missing 方法可以调用实际上并不存在的方法</li>
-</ul>
-<h3 id="幽灵方法-Ghost-Methods"><a href="#幽灵方法-Ghost-Methods" class="headerlink" title="幽灵方法 Ghost Methods"></a>幽灵方法 Ghost Methods</h3><ul>
-<li>被 method_missing 方法处理的消息，从调用者角度看，跟皮套方法没什么区别，而实际上接收者并没有对应的方法，这成为幽灵方法</li>
-</ul>
-<h3 id="动态代理-Dynamic-Proxies"><a href="#动态代理-Dynamic-Proxies" class="headerlink" title="动态代理 Dynamic Proxies"></a>动态代理 Dynamic Proxies</h3><ul>
-<li>可以捕获幽灵方法，并把它们转发给另外一个对象，成为动态代理</li>
-<li>repond_to? 不会感知幽灵方法</li>
-<li>respond_to_missing? 会返回 true 如果该方法是一个幽灵方法</li>
-<li>每次覆写 method_missing 时，同时也覆写 respond_to_missing? 方法</li>
-<li>当引用一个不存在的常量时，Ruby 会把这个常量名作为一个符号床底给 const_missing 方法<ul>
-<li>Module#const_missing</li>
-</ul>
-</li>
-<li>幽灵方法经常会遇到的问题<ul>
-<li>由于调用未定义的方法会导致调用 method_missing 方法，所以对象可能会接受错误的方法调用</li>
-<li>应该只在必要时才使用幽灵方法</li>
-<li>首先用普通方法实现功能，代码没有问题后，再将这些方法重构到 method_missing 中</li>
-</ul>
-</li>
-</ul>
-<h2 id="白板类-Blank-Slates"><a href="#白板类-Blank-Slates" class="headerlink" title="白板类 Blank Slates"></a>白板类 Blank Slates</h2><ul>
-<li>如果幽灵方法和真实方法发生名字冲突，幽灵方法就会忽略</li>
-<li>去除继承来的方法，这种拥有极少方法的类称为白板类</li>
-</ul>
-<h3 id="BasicObject"><a href="#BasicObject" class="headerlink" title="BasicObject"></a>BasicObject</h3><ul>
-<li>如果需要有个白板类，可以直接从 BasicObject 类继承</li>
-</ul>
-<h3 id="删除方法"><a href="#删除方法" class="headerlink" title="删除方法"></a>删除方法</h3><ul>
-<li><p>Module#undef_method</p>
+<li><p>使用方法来替代作用域门，就可以让一个作用域看到另外一个作用域里的变量</p>
 <ul>
-<li>它会删除所有所有好酷哦继承而来的方法</li>
+<li>这种技巧，称为嵌套文法作用域（nested lexical scopes）或扁平化作用域（flatting the scope）</li>
 </ul>
 </li>
-<li><p>Module#remove_method</p>
+<li><p>如果想要在一组方法之间共享一个变量，但有不希望其它方法访问这个变量，可以把这些方法定义在那个变量所在的边坡作用域里。这种用来共享变量的技巧成为共享作用域</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">define_methods</span></span></span><br><span class="line">  shared = <span class="number">0</span></span><br><span class="line">  Kernel.send <span class="symbol">:define_method</span>, <span class="symbol">:counter</span> <span class="keyword">do</span></span><br><span class="line">    Shared</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">  Kernel.send <span class="symbol">:define_method</span>, <span class="symbol">:inc</span> <span class="keyword">do</span> <span class="params">|x|</span></span><br><span class="line">    shared += x</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>只删除接收者自己的方法，而保留继承来的方法</li>
+<li><p>闭包总结</p>
+<ul>
+<li><p>每个 Ruby 作用域都包含一组绑定。不同的作用域之间被作用域门分隔</p>
+</li>
+<li><p>要想让某个绑定穿越作用域，可以使用代码块。</p>
+<ul>
+<li>一个代码块是一个闭包</li>
+<li>当定义一个代码块是，它会捕获当前环境中的绑定，并带着它们四处流动</li>
+</ul>
+</li>
+<li><p>可以使用 Class.new 方法代替 class 关键字，用 Module.new 代替 module 关键字, 用 Module#define_method 方法来代替 def 关键字。这就是扁平化作用域</p>
+</li>
+<li><p>如果一个扁平作用于中定义了多个方法，把这些方法用一个作用域门保护起来，它们就可以共享绑定，这种技巧成为共享作用域</p>
+</li>
 </ul>
 </li>
 </ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>在可以使用动态方法的时候，尽量使用动态方法；除非必须使用幽灵方法，否则尽量不要使用它</li>
+<h2 id="instance-eval-方法"><a href="#instance-eval-方法" class="headerlink" title="instance_eval 方法"></a>instance_eval 方法</h2><ul>
+<li>BasicObject#instance_eval</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @y = <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = MyClass.new</span><br><span class="line"></span><br><span class="line">obj.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">self</span></span><br><span class="line">  @v</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>instance_eval 运行时，代码块的接收者会成为 self, 因此它可以访问接收者的私有方法和实例变量</p>
+</li>
+<li><p>一般把传递给 instance_eval 方法的代码块称为上下文探针 （Context Probe）</p>
+</li>
 </ul>
 
     </div>
@@ -382,7 +397,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://stevenwu.net/2020/11/19/ruby-metaprogramming-methods/" title="Ruby 元编程学习笔记 - 方法">https://stevenwu.net/2020/11/19/ruby-metaprogramming-methods/</a>
+    <a href="https://stevenwu.net/2020/11/20/ruby-metaprogramming-blocks/" title="Ruby 元编程学习笔记 - Blocks">https://stevenwu.net/2020/11/20/ruby-metaprogramming-blocks/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -432,13 +447,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/11/19/ruby-metaprogramming-the-object-model/" rel="prev" title="Ruby 元编程学习笔记 - 对象模型">
-      <i class="fa fa-chevron-left"></i> Ruby 元编程学习笔记 - 对象模型
+    <a href="/2020/11/19/ruby-metaprogramming-methods/" rel="prev" title="Ruby 元编程学习笔记 - 方法">
+      <i class="fa fa-chevron-left"></i> Ruby 元编程学习笔记 - 方法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/11/20/ruby-metaprogramming-blocks/" rel="next" title="Ruby 元编程学习笔记 - Blocks">
-      Ruby 元编程学习笔记 - Blocks <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
