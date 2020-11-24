@@ -24,7 +24,7 @@
 <meta property="og:description" content="代码块（block）可以用来控制作用域（scope）, 作用域是变量和方法的可用性范围。块只是“可调用对象”大家族中的一员，还有像 proc 和 lambda 这样的对象。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-20T16:15:07.000Z">
-<meta property="article:modified_time" content="2020-11-21T15:43:10.015Z">
+<meta property="article:modified_time" content="2020-11-24T10:05:04.912Z">
 <meta property="article:author" content="Steven Wu">
 <meta property="article:tag" content="Ruby">
 <meta property="article:tag" content="Metaprogramming">
@@ -272,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-21 15:43:10" itemprop="dateModified" datetime="2020-11-21T15:43:10+00:00">2020-11-21</time>
+                <time title="Modified: 2020-11-24 10:05:04" itemprop="dateModified" datetime="2020-11-24T10:05:04+00:00">2020-11-24</time>
               </span>
 
           
@@ -374,14 +374,17 @@
 <h2 id="instance-eval-方法"><a href="#instance-eval-方法" class="headerlink" title="instance_eval 方法"></a>instance_eval 方法</h2><ul>
 <li>BasicObject#instance_eval</li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @y = <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = MyClass.new</span><br><span class="line"></span><br><span class="line">obj.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">self</span></span><br><span class="line">  @v</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MyClass</span><br><span class="line">  def initialize</span><br><span class="line">    @y &#x3D; 1</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">obj &#x3D; MyClass.new</span><br><span class="line"></span><br><span class="line">obj.instance_eval do</span><br><span class="line">  self</span><br><span class="line">  @v</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>instance_eval 运行时，代码块的接收者会成为 self, 因此它可以访问接收者的私有方法和实例变量</p>
 </li>
 <li><p>一般把传递给 instance_eval 方法的代码块称为上下文探针 （Context Probe）</p>
 </li>
+<li><p>instance_exec 方法，比 instance_eval 灵活一点，允许对代码块传入参数</p>
+</li>
 </ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">twisted_method</span></span></span><br><span class="line">    @y = <span class="number">2</span></span><br><span class="line">    C.new.instance_exec(@y) &#123; <span class="params">|y|</span> <span class="string">"@x: <span class="subst">#&#123;@x&#125;</span>, #y: <span class="subst">#&#123;y&#125;</span>"</span> &#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
