@@ -108,7 +108,7 @@ end
 
 - BasicObject#instance_eval
 
-```ruby
+```rubyi
 class MyClass
   def initialize
     @y = 1
@@ -126,3 +126,13 @@ end
 - instance_eval 运行时，代码块的接收者会成为 self, 因此它可以访问接收者的私有方法和实例变量
 
 - 一般把传递给 instance_eval 方法的代码块称为上下文探针 （Context Probe）
+- instance_exec 方法，比 instance_eval 灵活一点，允许对代码块传入参数
+
+```ruby
+class D
+  def twisted_method
+    @y = 2
+    C.new.instance_exec(@y) { |y| "@x: #{@x}, #y: #{y}" }
+  end
+end
+```
