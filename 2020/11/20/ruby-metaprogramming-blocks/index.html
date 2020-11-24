@@ -24,7 +24,7 @@
 <meta property="og:description" content="代码块（block）可以用来控制作用域（scope）, 作用域是变量和方法的可用性范围。块只是“可调用对象”大家族中的一员，还有像 proc 和 lambda 这样的对象。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-11-20T16:15:07.000Z">
-<meta property="article:modified_time" content="2020-11-24T10:05:04.912Z">
+<meta property="article:modified_time" content="2020-11-24T10:05:31.200Z">
 <meta property="article:author" content="Steven Wu">
 <meta property="article:tag" content="Ruby">
 <meta property="article:tag" content="Metaprogramming">
@@ -168,7 +168,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blocks"><span class="nav-number">1.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closures"><span class="nav-number">2.</span> <span class="nav-text">Closures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域-Scope"><span class="nav-number">2.1.</span> <span class="nav-text">作用域 Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域门-Scope-Gate"><span class="nav-number">2.2.</span> <span class="nav-text">作用域门 Scope Gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化作用域-Flatting-the-Scope"><span class="nav-number">2.3.</span> <span class="nav-text">扁平化作用域  Flatting the Scope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instance-eval-方法"><span class="nav-number">3.</span> <span class="nav-text">instance_eval 方法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blocks"><span class="nav-number">1.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closures"><span class="nav-number">2.</span> <span class="nav-text">Closures</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域-Scope"><span class="nav-number">2.1.</span> <span class="nav-text">作用域 Scope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域门-Scope-Gate"><span class="nav-number">2.2.</span> <span class="nav-text">作用域门 Scope Gate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扁平化作用域-Flatting-the-Scope"><span class="nav-number">2.3.</span> <span class="nav-text">扁平化作用域  Flatting the Scope</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instance-eval-方法"><span class="nav-number">3.</span> <span class="nav-text">instance_eval 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可调用对象-Callable-Objects"><span class="nav-number">4.</span> <span class="nav-text">可调用对象 Callable Objects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Proc-对象"><span class="nav-number">4.1.</span> <span class="nav-text">Proc 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proc-与-Lambda-对比"><span class="nav-number">4.2.</span> <span class="nav-text">Proc 与 Lambda 对比</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Proc-与-Lambda-的重要差别之一-return-关键字表现不同"><span class="nav-number">4.2.1.</span> <span class="nav-text">Proc 与 Lambda 的重要差别之一: return 关键字表现不同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Proc-与-Lambda-的重要差别之二：-参数数量检查方式"><span class="nav-number">4.2.2.</span> <span class="nav-text">Proc 与 Lambda 的重要差别之二： 参数数量检查方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比结论"><span class="nav-number">4.2.3.</span> <span class="nav-text">对比结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method-对象"><span class="nav-number">5.</span> <span class="nav-text">Method 对象</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -272,7 +272,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-11-24 10:05:04" itemprop="dateModified" datetime="2020-11-24T10:05:04+00:00">2020-11-24</time>
+                <time title="Modified: 2020-11-24 10:05:31" itemprop="dateModified" datetime="2020-11-24T10:05:31+00:00">2020-11-24</time>
               </span>
 
           
@@ -374,7 +374,7 @@
 <h2 id="instance-eval-方法"><a href="#instance-eval-方法" class="headerlink" title="instance_eval 方法"></a>instance_eval 方法</h2><ul>
 <li>BasicObject#instance_eval</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">class MyClass</span><br><span class="line">  def initialize</span><br><span class="line">    @y &#x3D; 1</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">obj &#x3D; MyClass.new</span><br><span class="line"></span><br><span class="line">obj.instance_eval do</span><br><span class="line">  self</span><br><span class="line">  @v</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span></span></span><br><span class="line">    @y = <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">obj = MyClass.new</span><br><span class="line"></span><br><span class="line">obj.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="keyword">self</span></span><br><span class="line">  @v</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>instance_eval 运行时，代码块的接收者会成为 self, 因此它可以访问接收者的私有方法和实例变量</p>
@@ -384,7 +384,82 @@
 <li><p>instance_exec 方法，比 instance_eval 灵活一点，允许对代码块传入参数</p>
 </li>
 </ul>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">twisted_method</span></span></span><br><span class="line">    @y = <span class="number">2</span></span><br><span class="line">    C.new.instance_exec(@y) &#123; <span class="params">|y|</span> <span class="string">"@x: <span class="subst">#&#123;@x&#125;</span>, #y: <span class="subst">#&#123;y&#125;</span>"</span> &#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">twisted_method</span></span></span><br><span class="line">    @y = <span class="number">2</span></span><br><span class="line">    C.new.instance_exec(@y) &#123; <span class="params">|y|</span> <span class="string">"@x: <span class="subst">#&#123;@x&#125;</span>, @y: <span class="subst">#&#123;y&#125;</span>"</span> &#125;</span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>有时，想创建一个知识为了在其中执行块的对象，这样的对象称为 Clean Room, BasicObject 往往用来充当 Clean Room</li>
+</ul>
+<h2 id="可调用对象-Callable-Objects"><a href="#可调用对象-Callable-Objects" class="headerlink" title="可调用对象 Callable Objects"></a>可调用对象 Callable Objects</h2><ul>
+<li>从底层来看，使用代码块分为两步，第一步，将代码打包备用；第二步, 调用代码块（通过 yield 语句）</li>
+<li>这种 “打包代码，以后调用”的机制并不是代码的专利，在 Ruby 中至少还有其他三种方法可以用来打包代码<ul>
+<li>使用 proc, proc 是由代码块转换来的对象</li>
+<li>使用 lambda, 它是 proc 的变种</li>
+<li>使用方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="Proc-对象"><a href="#Proc-对象" class="headerlink" title="Proc 对象"></a>Proc 对象</h3><ul>
+<li>代码块 block 不是对象</li>
+<li>Proc 类就是由块转换来的对象</li>
+<li>可以把代码块传给 Proc.new 方法来创建一个 Proc, 后面可以用 Proc#call 方法来指向这个由代码块转换而来的对象, 这种技巧称为延迟执行</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inc = Proc.new &#123; <span class="params">|x|</span> x + <span class="number">1</span> &#125;</span><br><span class="line">inc.call(<span class="number">2</span>) <span class="comment"># =&gt; 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>另外一种 创建 proc 的方式</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dec = proc &#123; <span class="params">|x|</span> x - <span class="number">1</span> &#125;</span><br><span class="line">dec.call(<span class="number">2</span>) <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过 lambda 方式创建 proc, 有两种方式</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dec = lambda &#123; <span class="params">|x|</span> x - <span class="number">1</span> &#125;</span><br><span class="line">dec<span class="class">.<span class="keyword">class</span> <span class="comment"># =&gt; Proc</span></span></span><br><span class="line">dec.call(<span class="number">2</span>) <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = -&gt;(x) &#123; x + <span class="number">1</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>要想将代码块传递给另外一个方法（或代码块），可以给这个方法添加一个特殊的参数，这个参数必须是参数列表中的最后一个，且以 &amp; 符号开头。</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">match</span><span class="params">(a, b)</span></span></span><br><span class="line">  <span class="keyword">yield</span>(a,b)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_match</span><span class="params">(a, b, &amp;op)</span></span></span><br><span class="line">  match(a, b, &amp;op)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">do_match(<span class="number">2</span>, <span class="number">3</span>) &#123; <span class="params">|x, y|</span> x * y &#125; <span class="comment"># =&gt; 6</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>代码块转换成 proc 对象: 加上 &amp; 操作符<ul>
+<li>&amp; 操作符含义：这是一个 Proc 对象，我想把它当做代码块来使用</li>
+<li>去掉 &amp; 操作符，就能再次得到一个 Proc 对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span><span class="params">(&amp;the_proc)</span></span></span><br><span class="line">  the_proc</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">p = my_method &#123; <span class="params">|name|</span> <span class="string">"Hello, <span class="subst">#&#123;name&#125;</span>"</span> &#125;</span><br><span class="line">p<span class="class">.<span class="keyword">class</span> <span class="comment"># =&gt; Proc</span></span></span><br><span class="line">p.call(<span class="string">'Bill'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Proc 转换成代码块：加上 &amp; 操作符</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_method</span></span></span><br><span class="line">  <span class="keyword">yield</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">my_proc = proc &#123; <span class="string">"Hello World"</span> &#125;</span><br><span class="line">my_method(&amp;my_proc) <span class="comment"># =&gt; Hello World</span></span><br></pre></td></tr></table></figure>
+<h3 id="Proc-与-Lambda-对比"><a href="#Proc-与-Lambda-对比" class="headerlink" title="Proc 与 Lambda 对比"></a>Proc 与 Lambda 对比</h3><ul>
+<li>Proc.new 方法，proc 方法， lambda 方法，&amp; 操作符，都会返回一个 Proc 对象</li>
+<li>用 lambda 方法创建的 Pro 成为 lambda, 而用其它方式创建的则成为 proc<ul>
+<li>可以使用 Proc#lambda? 方法监测 Proc 是不是 lambda</li>
+</ul>
+</li>
+</ul>
+<h4 id="Proc-与-Lambda-的重要差别之一-return-关键字表现不同"><a href="#Proc-与-Lambda-的重要差别之一-return-关键字表现不同" class="headerlink" title="Proc 与 Lambda 的重要差别之一: return 关键字表现不同"></a>Proc 与 Lambda 的重要差别之一: return 关键字表现不同</h4><ul>
+<li>lambda 中，return 仅从这个 lambda 中返回</li>
+<li>proc 中, return 不是从 proc 中返回，而是从定义 proc 的作用域返回</li>
+</ul>
+<h4 id="Proc-与-Lambda-的重要差别之二：-参数数量检查方式"><a href="#Proc-与-Lambda-的重要差别之二：-参数数量检查方式" class="headerlink" title="Proc 与 Lambda 的重要差别之二： 参数数量检查方式"></a>Proc 与 Lambda 的重要差别之二： 参数数量检查方式</h4><ul>
+<li>如果调用 lambda 时的参数数量不对，就会跑出 ArgumentError 错误</li>
+<li>如果调用 proc 时的参数数量不对，则会把传来的参数调整成自己期望的参数形式</li>
+</ul>
+<h4 id="对比结论"><a href="#对比结论" class="headerlink" title="对比结论"></a>对比结论</h4><ul>
+<li>lambda 更直观，更像是一个方法</li>
+<li>lambda 对参数要求严格，在调用 return 时只是从代码中返回</li>
+</ul>
+<h2 id="Method-对象"><a href="#Method-对象" class="headerlink" title="Method 对象"></a>Method 对象</h2><ul>
+<li>调用 Kernal#method 方法，可以获得一个用 Method 对象表示的方法，并能够通过 Method#call 方法进行调用</li>
+<li>通过 Method#to_proc 方法，可以把 Method 对象转换为 Proc</li>
+<li>define_method 可以把代码块转换为方法</li>
+<li>Method 对象在它自身所在对象的作用有中执行</li>
+</ul>
 
     </div>
 
