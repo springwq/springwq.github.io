@@ -108,7 +108,7 @@ end
 
 - BasicObject#instance_eval
 
-```rubyi
+```ruby
 class MyClass
   def initialize
     @y = 1
@@ -132,7 +132,114 @@ end
 class D
   def twisted_method
     @y = 2
-    C.new.instance_exec(@y) { |y| "@x: #{@x}, #y: #{y}" }
+    C.new.instance_exec(@y) { |y| "@x: #{@x}, @y: #{y}" }
   end
 end
 ```
+
+- 有时，想创建一个知识为了在其中执行块的对象，这样的对象称为 Clean Room, BasicObject 往往用来充当 Clean Room
+
+## 可调用对象 Callable Objects
+
+- 从底层来看，使用代码块分为两步，第一步，将代码打包备用；第二步, 调用代码块（通过 yield 语句）
+- 这种 “打包代码，以后调用”的机制并不是代码的专利，在 Ruby 中至少还有其他三种方法可以用来打包代码
+  - 使用 proc, proc 是由代码块转换来的对象
+  - 使用 lambda, 它是 proc 的变种
+  - 使用方法
+
+### Proc 对象
+
+- 代码块 block 不是对象
+- Proc 类就是由块转换来的对象
+- 可以把代码块传给 Proc.new 方法来创建一个 Proc, 后面可以用 Proc#call 方法来指向这个由代码块转换而来的对象, 这种技巧称为延迟执行
+
+```ruby
+inc = Proc.new { |x| x + 1 }
+inc.call(2) # => 3
+```
+
+- 另外一种 创建 proc 的方式
+
+```ruby
+dec = proc { |x| x - 1 }
+dec.call(2) # => 1
+```
+
+- 通过 lambda 方式创建 proc, 有两种方式
+
+```ruby
+dec = lambda { |x| x - 1 }
+dec.class # => Proc
+dec.call(2) # => 1
+```
+
+```ruby
+p = ->(x) { x + 1 }
+```
+
+- 要想将代码块传递给另外一个方法（或代码块），可以给这个方法添加一个特殊的参数，这个参数必须是参数列表中的最后一个，且以 & 符号开头。
+
+```ruby
+def match(a, b)
+  yield(a,b)
+end
+
+def do_match(a, b, &op)
+  match(a, b, &op)
+end
+
+do_match(2, 3) { |x, y| x * y } # => 6
+```
+
+- 代码块转换成 proc 对象: 加上 & 操作符
+  - & 操作符含义：这是一个 Proc 对象，我想把它当做代码块来使用
+  - 去掉 & 操作符，就能再次得到一个 Proc 对象
+
+```ruby
+def my_method(&the_proc)
+  the_proc
+end
+
+p = my_method { |name| "Hello, #{name}" }
+p.class # => Proc
+p.call('Bill')
+```
+
+- Proc 转换成代码块：加上 & 操作符
+
+```ruby
+def my_method
+  yield
+end
+
+my_proc = proc { "Hello World" }
+my_method(&my_proc) # => Hello World
+
+```
+### Proc 与 Lambda 对比
+
+- Proc.new 方法，proc 方法， lambda 方法，& 操作符，都会返回一个 Proc 对象
+- 用 lambda 方法创建的 Pro 成为 lambda, 而用其它方式创建的则成为 proc
+  - 可以使用 Proc#lambda? 方法监测 Proc 是不是 lambda
+
+#### Proc 与 Lambda 的重要差别之一: return 关键字表现不同
+
+- lambda 中，return 仅从这个 lambda 中返回
+- proc 中, return 不是从 proc 中返回，而是从定义 proc 的作用域返回
+
+#### Proc 与 Lambda 的重要差别之二： 参数数量检查方式
+
+- 如果调用 lambda 时的参数数量不对，就会跑出 ArgumentError 错误
+- 如果调用 proc 时的参数数量不对，则会把传来的参数调整成自己期望的参数形式
+
+#### 对比结论
+
+- lambda 更直观，更像是一个方法
+- lambda 对参数要求严格，在调用 return 时只是从代码中返回
+
+## Method 对象
+
+- 调用 Kernal#method 方法，可以获得一个用 Method 对象表示的方法，并能够通过 Method#call 方法进行调用
+- 通过 Method#to_proc 方法，可以把 Method 对象转换为 Proc
+- define_method 可以把代码块转换为方法
+- Method 对象在它自身所在对象的作用有中执行
