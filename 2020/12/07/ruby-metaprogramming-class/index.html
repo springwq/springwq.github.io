@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"stevenwu.net","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在 Ruby 中类的定义有所不同。使用 class 关键字时，不仅是在规定对象的行为方式，也是在运行代码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ruby 元编程读书笔记 - 类定义">
+<meta property="og:url" content="https://stevenwu.net/2020/12/07/ruby-metaprogramming-class/index.html">
+<meta property="og:site_name" content="Steven Wu">
+<meta property="og:description" content="在 Ruby 中类的定义有所不同。使用 class 关键字时，不仅是在规定对象的行为方式，也是在运行代码。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-07T15:20:29.000Z">
+<meta property="article:modified_time" content="2020-12-08T17:36:15.469Z">
+<meta property="article:author" content="Steven Wu">
+<meta property="article:tag" content="Ruby">
+<meta property="article:tag" content="Metaprogramming">
+<meta property="article:tag" content="Class">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://stevenwu.net/2020/12/07/ruby-metaprogramming-class/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Ruby 元编程读书笔记 - 类定义 | Steven Wu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Steven Wu</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类定义"><span class="nav-number">1.</span> <span class="nav-text">类定义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#深入类定义"><span class="nav-number">1.1.</span> <span class="nav-text">深入类定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当前类"><span class="nav-number">1.2.</span> <span class="nav-text">当前类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#class-eval-方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">class_eval 方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类实例变量"><span class="nav-number">1.3.</span> <span class="nav-text">类实例变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单件方法-Singleton-Methods"><span class="nav-number">2.</span> <span class="nav-text">单件方法 Singleton Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类方法"><span class="nav-number">2.1.</span> <span class="nav-text">类方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类宏-Class-Macro"><span class="nav-number">2.2.</span> <span class="nav-text">类宏 Class Macro</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单件类-Singleton-Class"><span class="nav-number">3.</span> <span class="nav-text">单件类 Singleton Class</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单件类定义"><span class="nav-number">3.1.</span> <span class="nav-text">单件类定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于方法查找"><span class="nav-number">3.2.</span> <span class="nav-text">关于方法查找</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ruby-对象模型的七条规则"><span class="nav-number">3.2.1.</span> <span class="nav-text">Ruby 对象模型的七条规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义类方法的三种语法"><span class="nav-number">3.2.2.</span> <span class="nav-text">定义类方法的三种语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单件类和-instance-eval"><span class="nav-number">3.2.3.</span> <span class="nav-text">单件类和 instance_eval</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类属性"><span class="nav-number">3.2.4.</span> <span class="nav-text">类属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类方法和-include-方法"><span class="nav-number">3.2.5.</span> <span class="nav-text">类方法和 include 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-extend"><span class="nav-number">3.2.6.</span> <span class="nav-text">Object#extend</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法包装器"><span class="nav-number">4.</span> <span class="nav-text">方法包装器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环绕别名-Around-Alias"><span class="nav-number">4.1.</span> <span class="nav-text">环绕别名 Around Alias</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#细化封装器-Refinement-Wrapper"><span class="nav-number">4.2.</span> <span class="nav-text">细化封装器 Refinement Wrapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下包含包装器-Prepended-Wrapper"><span class="nav-number">4.3.</span> <span class="nav-text">下包含包装器 Prepended Wrapper</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Steven Wu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/springwq" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;springwq" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wuqi0509@gmail.com" title="E-Mail → mailto:wuqi0509@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/springwq" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;springwq" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/springwq" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://stevenwu.net/2020/12/07/ruby-metaprogramming-class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Steven Wu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Steven Wu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ruby 元编程读书笔记 - 类定义
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-07 15:20:29" itemprop="dateCreated datePublished" datetime="2020-12-07T15:20:29+00:00">2020-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-12-08 17:36:15" itemprop="dateModified" datetime="2020-12-08T17:36:15+00:00">2020-12-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在 Ruby 中类的定义有所不同。使用 class 关键字时，不仅是在规定对象的行为方式，也是在运行代码。</p>
+<a id="more"></a>
+
+<h2 id="类定义"><a href="#类定义" class="headerlink" title="类定义"></a>类定义</h2><h3 id="深入类定义"><a href="#深入类定义" class="headerlink" title="深入类定义"></a>深入类定义</h3><ul>
+<li>一般认为定义类就是定义方法</li>
+<li>其实，可以再类定义中放入任何代码</li>
+<li>类定义也会返回最后一条语句</li>
+</ul>
+<h3 id="当前类"><a href="#当前类" class="headerlink" title="当前类"></a>当前类</h3><ul>
+<li>总有一个当前类（或模块）存在</li>
+<li>定义一个方法时，这个方法就成为当前类的一个实例方法</li>
+<li>在程序的顶层，当前类是 Object</li>
+<li>在一个方法中，当前列就是当前对象的类</li>
+<li>当用 class 关键字打开一个类时（或者用 module 模块打开模块时），这类成为当前类</li>
+</ul>
+<h4 id="class-eval-方法"><a href="#class-eval-方法" class="headerlink" title="class_eval 方法"></a>class_eval 方法</h4><ul>
+<li>class_eval 可以在不知道类名字的情况下打开一个类</li>
+<li>class_eval 会同时修改 self 和当前类</li>
+<li>Module#class_eval 比 class 关键字更灵活<ul>
+<li>可以对任何代表类的变量使用 class_eval, 而 class 关键字只能使用常量</li>
+<li>class 关键字会打开一个新的作用域，而 class_eval 则使用扁平作用域</li>
+</ul>
+</li>
+<li>class_exec/module_exec 接受额外的代码块作为参数</li>
+<li>通过我们用 install_eval 打开非类对象；而用 class_eval 打开类定义，然后用 def 定义方法。</li>
+</ul>
+<h3 id="类实例变量"><a href="#类实例变量" class="headerlink" title="类实例变量"></a>类实例变量</h3><ul>
+<li>在类定义时，定义的实例变量,即类对象的实例变量叫做类实例变量</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  @my_var = <span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在类中 以 @@ 大头的叫做类变量</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  @@v =<span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>类变量与类实例变量不同，它们可以被子类或类的实例被锁使用</li>
+<li>类变量并真正属于类，而是属于类体系结构；一般尽量避免使用类变量</li>
+</ul>
+<h2 id="单件方法-Singleton-Methods"><a href="#单件方法-Singleton-Methods" class="headerlink" title="单件方法 Singleton Methods"></a>单件方法 Singleton Methods</h2><ul>
+<li>只对单个对象生效的方法，成为单件方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str = <span class="string">"a string"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str</span>.<span class="title">title?</span></span></span><br><span class="line">  <span class="keyword">self</span>.updcase == <span class="keyword">self</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><ul>
+<li>类方法的实际上就是一个类对象的单件方法</li>
+<li>Ruby 中对象类型并不严格与类相关，类型只是对象能相应的一组方法，这种概念成为 duck typing</li>
+</ul>
+<h3 id="类宏-Class-Macro"><a href="#类宏-Class-Macro" class="headerlink" title="类宏 Class Macro"></a>类宏 Class Macro</h3><ul>
+<li>attr_reader, attr_writer, attr_accessor 称为类宏</li>
+</ul>
+<h2 id="单件类-Singleton-Class"><a href="#单件类-Singleton-Class" class="headerlink" title="单件类 Singleton Class"></a>单件类 Singleton Class</h2><h3 id="单件类定义"><a href="#单件类定义" class="headerlink" title="单件类定义"></a>单件类定义</h3><ul>
+<li>一个对象特有的隐藏类，被称为该对象的单件类，或 metaclass, eigenclass</li>
+<li>每个单件类只有一个实例，而且不能被继承</li>
+<li>单件类是一个对象的单件方法存活之所</li>
+<li>Object#singleton_class 返回单件类的引用</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"abc"</span>.singleton_class</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>也可通过 class &lt;&lt; 语法获取单件类</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">obj = Object.new</span><br><span class="line"></span><br><span class="line">singleton_class = <span class="class"><span class="keyword">class</span> &lt;&lt; obj</span></span><br><span class="line">  <span class="keyword">self</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">singleton_class<span class="class">.<span class="keyword">class</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="关于方法查找"><a href="#关于方法查找" class="headerlink" title="关于方法查找"></a>关于方法查找</h3><ul>
+<li>如果对象有单件类，Ruby 不是从它所在对象的类开始查找，而是从对象的单件类中开始查找方法</li>
+<li>对象的单例方法就存在对象的单例类中</li>
+<li>单件类的超类就是超类的单件类</li>
+</ul>
+<h4 id="Ruby-对象模型的七条规则"><a href="#Ruby-对象模型的七条规则" class="headerlink" title="Ruby 对象模型的七条规则"></a>Ruby 对象模型的七条规则</h4><ul>
+<li>只有一种对象： 普通对象或模块</li>
+<li>只有一种模块：普通模块、一个类或一个单件类</li>
+<li>只有一种方法，它存在于一个模块中 - 通常是在一个类中</li>
+<li>每个对象（包括类）都有自己的 “真正的类”：普通类或单件类</li>
+<li>除了 BasicObject 类没有超类外，每个类有且只有一个祖先： 一个类或模块</li>
+<li>一个对象的单件类的超类是这个对象的类：一个类的单件类的超类就是这个类的超类的单件类</li>
+<li>调用一个方法时，Ruby 先进入接收者真正的类，然后进入祖先链</li>
+</ul>
+<h4 id="定义类方法的三种语法"><a href="#定义类方法的三种语法" class="headerlink" title="定义类方法的三种语法"></a>定义类方法的三种语法</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">MyClass</span>.<span class="title">a_class_method</span>;</span><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">another_class_method</span>;</span><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> &lt;&lt; self</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">yet_another_class_method</span>;</span><span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="单件类和-instance-eval"><a href="#单件类和-instance-eval" class="headerlink" title="单件类和 instance_eval"></a>单件类和 instance_eval</h4><ul>
+<li>instance_eval 也会修改当前类，他会把当前类修改为接收者的单件类；即 instance_eval 可定义单件方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">s1, s2 = <span class="string">'abc'</span>, <span class="string">'def'</span></span><br><span class="line"></span><br><span class="line">s1.instance_eval <span class="keyword">do</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">swoosh!</span>;</span> reverse; <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">s1.swoosh! <span class="comment"># =&gt; 'cba'</span></span><br><span class="line">s2.respond_to?(<span class="symbol">:swoosh!</span>) <span class="comment"># =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类属性"><a href="#类属性" class="headerlink" title="类属性"></a>类属性</h4><ul>
+<li>一般可通过类宏给对象创造属性，如果要给类创建属性，可在单件类中定义类宏</li>
+<li>在单例类中定义的方法，实际上会成为类方法</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line">  <span class="class"><span class="keyword">class</span> &lt;&lt; self</span></span><br><span class="line">    <span class="keyword">attr_accessor</span> <span class="symbol">:c</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="类方法和-include-方法"><a href="#类方法和-include-方法" class="headerlink" title="类方法和 include 方法"></a>类方法和 include 方法</h4><ul>
+<li>类扩展通过向类的单件类中添加模块来定义类方法</li>
+<li>类方法其实是单件方法的特例</li>
+<li>对象也可以在其单件类中通过 include module 的方式来扩展方法，成为对象扩展</li>
+</ul>
+<h4 id="Object-extend"><a href="#Object-extend" class="headerlink" title="Object#extend"></a>Object#extend</h4><ul>
+<li>class 中通过 extend 引入的 module 中的方法是类方法</li>
+<li>class 中通过 incdule 引入的 module 中的方法是实例方法</li>
+</ul>
+<h2 id="方法包装器"><a href="#方法包装器" class="headerlink" title="方法包装器"></a>方法包装器</h2><p>有三种方式，可将一个方法包装另外一个方法</p>
+<h3 id="环绕别名-Around-Alias"><a href="#环绕别名-Around-Alias" class="headerlink" title="环绕别名 Around Alias"></a>环绕别名 Around Alias</h3><ul>
+<li>alias_method 可以给 Ruby 方法取别名</li>
+<li>如果要在顶级作用域中修改方法，需使用 alias 关键字</li>
+<li>使用 alias_method 重新定义方法时，并不真正修改这个方法，只要老方法还存在一个绑定的名字，仍旧可以调用</li>
+<li>可通过如下三个步骤编写环绕别名<ul>
+<li>给方法定义一个别名</li>
+<li>重定义这个方法</li>
+<li>在新的方法中调用老的方法</li>
+</ul>
+</li>
+<li>环绕别名也是一种猴子补丁，是全局性的</li>
+</ul>
+<h3 id="细化封装器-Refinement-Wrapper"><a href="#细化封装器-Refinement-Wrapper" class="headerlink" title="细化封装器 Refinement Wrapper"></a>细化封装器 Refinement Wrapper</h3><ul>
+<li>在细化方法中调用 super, 则会调用哪个没有细化的原始方法，这种技巧成为细化包装器</li>
+<li>细化包装器的作用范围知道文件末尾处</li>
+</ul>
+<h3 id="下包含包装器-Prepended-Wrapper"><a href="#下包含包装器-Prepended-Wrapper" class="headerlink" title="下包含包装器 Prepended Wrapper"></a>下包含包装器 Prepended Wrapper</h3><ul>
+<li>Module#prepend 方法会把包含的模块插在祖先链中该类的下方</li>
+<li>被 prepend 方法包含的模块可以覆写改类的同名方法，同时可以通过super 调用该类中的原始方法</li>
+<li>以上技术称为下包含包装器，一般认为它比细化包装和环绕别名更明晰</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Steven Wu
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://stevenwu.net/2020/12/07/ruby-metaprogramming-class/" title="Ruby 元编程读书笔记 - 类定义">https://stevenwu.net/2020/12/07/ruby-metaprogramming-class/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/springwq">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Ruby/" rel="tag"># Ruby</a>
+              <a href="/tags/Metaprogramming/" rel="tag"># Metaprogramming</a>
+              <a href="/tags/Class/" rel="tag"># Class</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/20/ruby-metaprogramming-blocks/" rel="prev" title="Ruby 元编程学习笔记 - Blocks">
+      <i class="fa fa-chevron-left"></i> Ruby 元编程学习笔记 - Blocks
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Steven Wu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
