@@ -4,9 +4,11 @@ date: 2020-12-09 10:15:56
 tags: [Ruby, Metaprogramming]
 ---
 
+使用 Kernal#eval 和 Hook methods 能实现编写代码的代码
+
+<!--more-->
 
 ## Kernal#eval 方法
-
 ### 定义
 
 - Kernal#eval 方法会执行字符串中的代码，并返回执行结果
