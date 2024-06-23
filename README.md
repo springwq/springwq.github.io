@@ -1,4 +1,3 @@
-基于 HEXO 的个人 blog，采用 NeXT theme
 
 ## 启动 hexo server
 
@@ -15,7 +14,7 @@ $ hexo new '文章标题'
 ## 发布
 
 ```shell
-$ git push origin hexo-source
+$ git push origin main
 ```
 
 ## 显示摘要
