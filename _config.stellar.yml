@@ -26,3 +26,8 @@ comments:
     data-lang: zh-CN
     data-loading: lazy
     crossorigin: anonymous
+
+footer:
+   content: | # 支持 Markdown 格式
+    stevenruby.com © 2024 | Powered by [Hexo](https://hexo.io/) | Based on Theme: [{theme.name} {theme.version}]({theme.tree})。
+    本博客所有文章除特别声明外，均采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。
