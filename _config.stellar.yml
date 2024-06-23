@@ -1,0 +1,28 @@
+article:
+  type: tech # tech/story
+  auto_excerpt: 200
+
+logo:
+  subtitle: 'Steven Wu | Back End Software - Ruby' # '文字1 | 文字2' (鼠标放上去会切换到文字2)
+  avatar: '[{config.avatar}](/about/)'
+  title: '[{config.title}](/)'
+
+comments:
+  service: giscus
+  # giscus
+  # https://giscus.app/zh-CN
+  giscus:
+    src: https://giscus.app/client.js
+    data-repo: springwq/springwq.github.io # [在此输入仓库]
+    data-repo-id:  MDEwOlJlcG9zaXRvcnkzNTcyMzg1MA== # [在此输入仓库 ID]
+    data-category: Announcements # [在此输入分类名]
+    data-category-id: DIC_kwDOAiEaSs4CgTq7
+    data-mapping: pathname
+    data-strict: 0
+    data-reactions-enabled: 1
+    data-emit-metadata: 0
+    data-input-position: top # top, bottom
+    data-theme: preferred_color_scheme
+    data-lang: zh-CN
+    data-loading: lazy
+    crossorigin: anonymous
