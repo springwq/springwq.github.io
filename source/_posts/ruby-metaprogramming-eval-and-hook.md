@@ -1,5 +1,5 @@
 ---
-title:  Ruby 元编程学习笔记 - Eval and Hook
+title:  Ruby 元编程 - Eval and Hook
 date: 2020-12-09 10:15:56
 tags: [Ruby, Metaprogramming]
 ---

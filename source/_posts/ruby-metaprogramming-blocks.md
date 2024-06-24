@@ -1,5 +1,5 @@
 ---
-title: Ruby 元编程学习笔记 - Blocks
+title: Ruby 元编程 - Blocks
 date: 2020-11-20 16:15:07
 tags: [Ruby, Metaprogramming]
 ---

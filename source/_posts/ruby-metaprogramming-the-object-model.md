@@ -1,5 +1,5 @@
 ---
-title: Ruby 元编程学习笔记 - 对象模型
+title: Ruby 元编程 - 对象模型
 date: 2020-11-19 15:19:52
 tags: [Ruby, Metaprogramming]
 ---

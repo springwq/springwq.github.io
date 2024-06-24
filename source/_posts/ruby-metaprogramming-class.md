@@ -1,5 +1,5 @@
 ---
-title: Ruby 元编程读书笔记 - 类定义
+title: Ruby 元编程 - 类定义
 date: 2020-12-07 15:20:29
 tags: [Ruby, Metaprogramming, Class]
 ---

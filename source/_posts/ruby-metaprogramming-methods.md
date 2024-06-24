@@ -1,5 +1,5 @@
 ---
-title: Ruby 元编程学习笔记 - 方法
+title: Ruby 元编程 - Method
 date: 2020-11-19 23:57:02
 tags: [Ruby, Metaprogramming]
 ---
