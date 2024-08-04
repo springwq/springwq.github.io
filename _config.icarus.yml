@@ -18,7 +18,7 @@ head:
         # when there is not enough space to display full name
         short_name: 'Steven Wu'
         # The start URL of the web application
-        start_url: https://stevenruby.com
+        start_url: http://stevenruby.com
         # The default theme color for the application
         theme_color:
         # A placeholder background color for the application page to display
