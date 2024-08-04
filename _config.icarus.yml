@@ -18,7 +18,7 @@ head:
         # when there is not enough space to display full name
         short_name: 'Steven Wu'
         # The start URL of the web application
-        start_url: https://stevenruby.com
+        start_url:
         # The default theme color for the application
         theme_color:
         # A placeholder background color for the application page to display
@@ -118,8 +118,6 @@ navbar:
           url: 'https://github.com/springwq/springwq.github.io/discussions'
 # Page footer configurations
 footer:
-    # Copyright text
-    copyright:
     # Links to be shown on the right of the footer section
     links:
         Discuss on GitHub:
@@ -340,7 +338,7 @@ plugins:
     # http://outdatedbrowser.com/
     outdated_browser: false
     # Enable PJAX
-    pjax: true
+    pjax: false
     # Show a progress bar at top of the page on page loading
     progressbar: true
     # Statcounter statistics
