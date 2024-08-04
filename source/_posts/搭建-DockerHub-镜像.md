@@ -2,6 +2,7 @@
 title: 为群晖 NAS Container Manager 配置注册表镜像
 date: 2024-06-24 22:58:52
 categories: [NAS, Docker]
+tags: [Docker, 群晖]
 ---
 
 
