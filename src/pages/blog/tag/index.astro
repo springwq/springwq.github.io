@@ -23,7 +23,7 @@ const tags = [...counts.entries()].sort((a, b) => a[1].label.localeCompare(b[1].
       tags.map(([, tag]) => (
         <li>
           <a href={tagPath(tag.label)}>
-            {tag.label} <span class="project-note">{tag.count}</span>
+            {tag.label} <span class="tag-count">{tag.count}</span>
           </a>
         </li>
       ))

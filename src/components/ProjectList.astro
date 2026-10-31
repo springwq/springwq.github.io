@@ -1,17 +1,39 @@
 ---
 import { projects } from '../data/projects';
+
+const [primary, ...rest] = projects;
 ---
 
-<ul class="project-list">
+<div class="project-board">
   {
-    projects.map((project) => (
-      <li>
-        <p class="project-name">
-          {project.href ? <a href={project.href}>{project.title}</a> : project.title}
-        </p>
-        {project.note && <p class="project-note">{project.note}</p>}
-        <p>{project.summary}</p>
-      </li>
-    ))
+    primary?.href && (
+      <a class="project-feature" href={primary.href}>
+        <span class="project-kicker">主项目</span>
+        <span class="project-zh">{primary.note}</span>
+        <span class="project-en">{primary.title}</span>
+        <p>{primary.summary}</p>
+        <span class="project-go">bestjapanbuy.com</span>
+      </a>
+    )
   }
-</ul>
+  <div class="project-stack">
+    {
+      rest.map((project) =>
+        project.href ? (
+          <a class="project-tile" href={project.href}>
+            <span>
+              <strong>{project.title}</strong>
+              {project.note && <span class="project-en">{project.note}</span>}
+            </span>
+            <p>{project.summary}</p>
+          </a>
+        ) : (
+          <div class="project-tile">
+            <strong>{project.title}</strong>
+            <p>{project.summary}</p>
+          </div>
+        ),
+      )
+    }
+  </div>
+</div>
