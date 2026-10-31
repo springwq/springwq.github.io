@@ -1,0 +1,320 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/2020/07/28/my-favorite-pry-featurs",
+      "destination": "/blog/my-favorite-pry-featurs/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/07/28/my-favorite-pry-featurs/",
+      "destination": "/blog/my-favorite-pry-featurs/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/19/ruby-metaprogramming-the-object-model",
+      "destination": "/blog/ruby-metaprogramming-the-object-model/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/19/ruby-metaprogramming-the-object-model/",
+      "destination": "/blog/ruby-metaprogramming-the-object-model/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/19/ruby-metaprogramming-methods",
+      "destination": "/blog/ruby-metaprogramming-methods/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/19/ruby-metaprogramming-methods/",
+      "destination": "/blog/ruby-metaprogramming-methods/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/20/ruby-metaprogramming-blocks",
+      "destination": "/blog/ruby-metaprogramming-blocks/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/11/20/ruby-metaprogramming-blocks/",
+      "destination": "/blog/ruby-metaprogramming-blocks/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/12/07/ruby-metaprogramming-class",
+      "destination": "/blog/ruby-metaprogramming-class/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/12/07/ruby-metaprogramming-class/",
+      "destination": "/blog/ruby-metaprogramming-class/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/12/09/ruby-metaprogramming-eval-and-hook",
+      "destination": "/blog/ruby-metaprogramming-eval-and-hook/",
+      "permanent": true
+    },
+    {
+      "source": "/2020/12/09/ruby-metaprogramming-eval-and-hook/",
+      "destination": "/blog/ruby-metaprogramming-eval-and-hook/",
+      "permanent": true
+    },
+    {
+      "source": "/2024/06/24/为群晖-NAS-Container-Manager-配置注册表镜像",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/2024/06/24/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/archives",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/07",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/07/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/11",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/11/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/12",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2020/12/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2024",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2024/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2024/06",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/archives/2024/06/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/tags",
+      "destination": "/blog/tag/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/",
+      "destination": "/blog/tag/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Ruby",
+      "destination": "/blog/tag/ruby/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Ruby/",
+      "destination": "/blog/tag/ruby/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/ruby",
+      "destination": "/blog/tag/ruby/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/ruby/",
+      "destination": "/blog/tag/ruby/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Metaprogramming",
+      "destination": "/blog/tag/metaprogramming/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Metaprogramming/",
+      "destination": "/blog/tag/metaprogramming/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/metaprogramming",
+      "destination": "/blog/tag/metaprogramming/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/metaprogramming/",
+      "destination": "/blog/tag/metaprogramming/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Class",
+      "destination": "/blog/tag/class/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Class/",
+      "destination": "/blog/tag/class/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/class",
+      "destination": "/blog/tag/class/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/class/",
+      "destination": "/blog/tag/class/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Pry",
+      "destination": "/blog/tag/pry/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Pry/",
+      "destination": "/blog/tag/pry/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/pry",
+      "destination": "/blog/tag/pry/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/pry/",
+      "destination": "/blog/tag/pry/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Docker",
+      "destination": "/blog/tag/docker/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/Docker/",
+      "destination": "/blog/tag/docker/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/docker",
+      "destination": "/blog/tag/docker/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/docker/",
+      "destination": "/blog/tag/docker/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/群晖",
+      "destination": "/blog/tag/群晖/",
+      "permanent": true
+    },
+    {
+      "source": "/tags/群晖/",
+      "destination": "/blog/tag/群晖/",
+      "permanent": true
+    },
+    {
+      "source": "/categories",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/uncategorized",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/uncategorized/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/NAS",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/NAS/",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/Docker",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/categories/Docker/",
+      "destination": "/blog/为群晖-NAS-Container-Manager-配置注册表镜像/",
+      "permanent": true
+    },
+    {
+      "source": "/atom.xml",
+      "destination": "/rss.xml",
+      "permanent": true
+    },
+    {
+      "source": "/feed.xml",
+      "destination": "/rss.xml",
+      "permanent": true
+    },
+    {
+      "source": "/index.xml",
+      "destination": "/rss.xml",
+      "permanent": true
+    }
+  ]
+}

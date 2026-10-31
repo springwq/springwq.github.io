@@ -1,0 +1,22 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostList from '../../../components/PostList.astro';
+import { getPosts, tagSlug } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const slugs = new Set(posts.flatMap((post) => post.data.tags.map((tag) => tagSlug(tag))));
+  return [...slugs].map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const posts = (await getPosts()).filter((post) => post.data.tags.some((item) => tagSlug(item) === tag));
+const label = posts.flatMap((post) => post.data.tags).find((item) => tagSlug(item) === tag) ?? tag;
+---
+
+<Base title={`标签：${label}`} description={`标签「${label}」下的文章。`}>
+  <p class="kicker">Tag</p>
+  <h1>标签：{label}</h1>
+  <PostList posts={posts} />
+  <p class="back"><a href="/blog/tag/">全部标签</a></p>
+</Base>

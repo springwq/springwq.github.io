@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectList from '../components/ProjectList.astro';
+import PostList from '../components/PostList.astro';
+import { SITE } from '../consts';
+import { getPosts } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 4);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      name: 'Steven Wu',
+      url: SITE.url,
+      sameAs: ['https://github.com/springwq'],
+      description: '程序员。做 AI 实战和独立开发，用 AI 在真实工作里提效。',
+    },
+    {
+      '@type': 'WebSite',
+      name: 'Steven Wu',
+      url: SITE.url,
+      inLanguage: 'zh-CN',
+      author: { '@type': 'Person', name: 'Steven Wu', url: SITE.url },
+    },
+  ],
+};
+---
+
+<Base title={SITE.title} description={SITE.description} jsonLd={jsonLd}>
+  <article class="card">
+    <p class="kicker">个人站点</p>
+    <h1>Steven Wu</h1>
+    <p class="lead">AI 实战 / 独立开发 / 程序员用 AI 提效</p>
+    <p>我写代码。现在主要把 AI 用在真实的工作和独立项目里，用来把事情做完。</p>
+    <p>不出镜。这个网站是一张名片，也留着以前写的文章。</p>
+    <p class="en">Programmer. AI in real work, side projects, and a writing archive. No camera.</p>
+    <h2>项目</h2>
+    <ProjectList />
+  </article>
+
+  <section class="section" aria-labelledby="recent-posts">
+    <div class="section-head">
+      <h2 id="recent-posts">最近的文章</h2>
+      <a class="more" href="/blog/">全部文章</a>
+    </div>
+    <PostList posts={posts} />
+  </section>
+</Base>

@@ -1,0 +1,17 @@
+---
+import { projects } from '../data/projects';
+---
+
+<ul class="project-list">
+  {
+    projects.map((project) => (
+      <li>
+        <p class="project-name">
+          {project.href ? <a href={project.href}>{project.title}</a> : project.title}
+        </p>
+        {project.note && <p class="project-note">{project.note}</p>}
+        <p>{project.summary}</p>
+      </li>
+    ))
+  }
+</ul>
