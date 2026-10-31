@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectList from '../components/ProjectList.astro';
+
+const description = 'Steven Wu 公开在做的项目：BestJapanBuy（日本买明白）、GitHub，以及 stevenwu.ai。';
+---
+
+<Base title="项目" description={description}>
+  <p class="kicker">Projects</p>
+  <h1>项目</h1>
+  <p class="page-intro column">公开在做、而且有地址的几件事。没列出来的，就不算这个站要介绍的项目。</p>
+  <ProjectList />
+</Base>
